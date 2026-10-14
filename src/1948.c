@@ -1,16 +1,16 @@
 #include <stdio.h>
 
-int is_divisible(long long number, long long divisor) {
-    long long remainder = number;
+int is_divisible(int number, int divisor) {
+    int remainder = number;
     while (remainder > 0) {
         remainder = remainder - divisor;
     }
     return remainder == 0;
 }
 
-int is_prime(long long number) {
+int is_prime(int number) {
     int result = 1;
-    long long divisor = 2;
+    int divisor = 2;
 
     if (number < 2) {
         result = 0;
@@ -26,9 +26,9 @@ int is_prime(long long number) {
     return result;
 }
 
-long long largest_prime_factor(long long number) {
-    long long result = -1;
-    long long candidate = 2;
+int largest_prime_factor(int number) {
+    int result = -1;
+    int candidate = 2;
 
     if (number < 0) {
         number = -number;
@@ -45,15 +45,15 @@ long long largest_prime_factor(long long number) {
 }
 
 int main(void) {
-    long long number = 0;
+    int number = 0;
     char end = '\0';
 
-    if (scanf("%lld%c", &number, &end) == 2 && end == '\n') {
-        long long result = largest_prime_factor(number);
+    if (scanf("%d%c", &number, &end) == 2 && end == '\n') {
+        int result = largest_prime_factor(number);
         if (result == -1) {
             printf("n/a");
         } else {
-            printf("%lld", result);
+            printf("%d", result);
         }
     } else {
         printf("n/a");
