@@ -1,14 +1,17 @@
 #include <stdio.h>
 
 int encode_symbol(char symbol) {
+    /* Перевод символа в ASCII-код. */
     return (unsigned char)symbol;
 }
 
 char decode_symbol(int value) {
+    /* Перевод ASCII-кода обратно в символ. */
     return (char)value;
 }
 
 int hex_digit_to_int(char symbol) {
+    /* Перевод одного HEX-символа в число 0..15. */
     int result = -1;
 
     if (symbol >= '0' && symbol <= '9') {
@@ -23,6 +26,7 @@ int hex_digit_to_int(char symbol) {
 }
 
 int decode_hex_pair(char first, char second, int *ok) {
+    /* Перевод пары HEX-символов в один байт. */
     int value1 = hex_digit_to_int(first);
     int value2 = hex_digit_to_int(second);
     int result = 0;
@@ -37,6 +41,7 @@ int decode_hex_pair(char first, char second, int *ok) {
 }
 
 int process_encode_mode(void) {
+    /* Режим 0: из 'A B C' делаем '41 42 43'. */
     int ok = 1;
     int printed = 0;
     int token_length = 0;
@@ -83,6 +88,7 @@ int process_encode_mode(void) {
 }
 
 int process_decode_mode(void) {
+    /* Режим 1: из '41 42 43' делаем 'A B C'. */
     int ok = 1;
     int printed = 0;
     int token_length = 0;
@@ -140,6 +146,7 @@ int process_decode_mode(void) {
 int main(int argc, char *argv[]) {
     int ok = 1;
 
+    /* Выбор режима работы по аргументу командной строки. */
     if (argc != 2) {
         ok = 0;
     } else if (argv[1][0] == '0' && argv[1][1] == '\0') {

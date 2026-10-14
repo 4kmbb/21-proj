@@ -1,6 +1,7 @@
 #include <stdio.h>
 
 int is_divisible(int number, int divisor) {
+    /* Проверка делимости через вычитание вместо / и %. */
     int remainder = number;
     while (remainder > 0) {
         remainder = remainder - divisor;
@@ -9,6 +10,7 @@ int is_divisible(int number, int divisor) {
 }
 
 int is_prime(int number) {
+    /* Простое число: есть только делители 1 и само число. */
     int result = 1;
     int divisor = 2;
 
@@ -27,6 +29,7 @@ int is_prime(int number) {
 }
 
 int largest_prime_factor(int number) {
+    /* Ищем самый большой делитель, который одновременно простой. */
     int result = -1;
     int candidate = 2;
 
@@ -48,6 +51,7 @@ int main(void) {
     int number = 0;
     char end = '\0';
 
+    /* Принимаем только одно целое число и перевод строки. */
     if (scanf("%d%c", &number, &end) == 2 && end == '\n') {
         int result = largest_prime_factor(number);
         if (result == -1) {
