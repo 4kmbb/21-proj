@@ -41,6 +41,10 @@ int main(void) {
         }
 
         if (ok == 1) {
+            // Приводим оба числа к каноничному виду без ведущих нулей.
+            normalize_number(buff1, &len1);
+            normalize_number(buff2, &len2);
+
             int sum_result[LEN + 1];
             int sum_len = 0;
             int sub_result[LEN];
