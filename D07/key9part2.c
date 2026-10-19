@@ -10,6 +10,7 @@ int parse_number_line(char *line, int *buffer, int *length);
 int compare_numbers(int *buff1, int len1, int *buff2, int len2);
 void normalize_number(int *buffer, int *length);
 void print_number(int *buffer, int length);
+int process_numbers(char *line1, char *line2);
 
 /*
     Беззнаковая длинная арифметика в массивах цифр.
@@ -21,7 +22,6 @@ int main(void) {
     char line2[LINE_SIZE];
     int ok = 1;
 
-    // Читаем две строки целиком, чтобы точно разделить два больших числа.
     if (fgets(line1, LINE_SIZE, stdin) == NULL) {
         ok = 0;
     }
@@ -30,37 +30,7 @@ int main(void) {
     }
 
     if (ok == 1) {
-        int buff1[LEN];
-        int buff2[LEN];
-        int len1 = 0;
-        int len2 = 0;
-
-        ok = parse_number_line(line1, buff1, &len1);
-        if (ok == 1) {
-            ok = parse_number_line(line2, buff2, &len2);
-        }
-
-        if (ok == 1) {
-            // Приводим оба числа к каноничному виду без ведущих нулей.
-            normalize_number(buff1, &len1);
-            normalize_number(buff2, &len2);
-
-            int sum_result[LEN + 1];
-            int sum_len = 0;
-            int sub_result[LEN];
-            int sub_len = 0;
-
-            sum(buff1, len1, buff2, len2, sum_result, &sum_len);
-            print_number(sum_result, sum_len);
-            printf("\n");
-
-            if (compare_numbers(buff1, len1, buff2, len2) >= 0) {
-                sub(buff1, len1, buff2, len2, sub_result, &sub_len);
-                print_number(sub_result, sub_len);
-            } else {
-                printf("n/a");
-            }
-        } else {
+        if (process_numbers(line1, line2) == 0) {
             printf("n/a");
         }
     } else {
@@ -68,6 +38,38 @@ int main(void) {
     }
 
     return 0;
+}
+
+int process_numbers(char *line1, char *line2) {
+    int buff1[LEN];
+    int buff2[LEN];
+    int len1 = 0;
+    int len2 = 0;
+    int ok = parse_number_line(line1, buff1, &len1);
+
+    if (ok == 1) {
+        ok = parse_number_line(line2, buff2, &len2);
+    }
+    if (ok == 1) {
+        int sum_result[LEN + 1];
+        int sum_len = 0;
+        int sub_result[LEN];
+        int sub_len = 0;
+
+        normalize_number(buff1, &len1);
+        normalize_number(buff2, &len2);
+        sum(buff1, len1, buff2, len2, sum_result, &sum_len);
+        print_number(sum_result, sum_len);
+        printf("\n");
+        if (compare_numbers(buff1, len1, buff2, len2) >= 0) {
+            sub(buff1, len1, buff2, len2, sub_result, &sub_len);
+            print_number(sub_result, sub_len);
+        } else {
+            printf("n/a");
+        }
+    }
+
+    return ok;
 }
 
 // Разбираем одну строку в массив цифр, проверяя, что каждый токен это число 0..9.
